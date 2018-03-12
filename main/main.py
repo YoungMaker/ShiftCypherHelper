@@ -21,11 +21,16 @@ if __name__ == '__main__':
     root.title("Shift Cipher Helper")
     mainFrame = ttk.Frame(root)
 
-    textShift1 = ttk.Label(mainFrame, text = shiftBy(-1, cypherText)).pack()
-    cText = ttk.Label(mainFrame, text=shiftBy(0, cypherText)).pack()
-    textShift2 = ttk.Label(mainFrame, text = shiftBy(1, cypherText)).pack()
+    mainFrame.grid(column=0, row=2, sticky=(N, W, E, S))
 
-    mainFrame.pack()
 
+    textShift1 = ttk.Label(mainFrame, text = shiftBy(-1, cypherText),
+                           font='Helvetica 22 bold').grid(column=0, row=0)
+    cText = ttk.Label(mainFrame, text=shiftBy(0, cypherText),
+                      font='Helvetica 22 bold').grid(column=0, row=1)
+    textShift2 = ttk.Label(mainFrame, text = shiftBy(1, cypherText),
+                           font='Helvetica 22 bold').grid(column=0, row=2)
+
+    #mainFrame.pack()
 
     root.mainloop()
