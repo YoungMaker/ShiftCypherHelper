@@ -73,10 +73,9 @@ if __name__ == '__main__':
 
     createLabels(mainFrame, -1 * maxShift, cypherText, 0, backwards=True)
 
-    cText = Label(mainFrame, text=shiftBy(0, cypherText),
-                      font='Helvetica 22 bold')
+    createRow(mainFrame, cypherText,  maxShift+1)
 
-    createLabels(mainFrame, maxShift, cypherText, 0, backwards=False)
+    createLabels(mainFrame, maxShift, cypherText, maxShift+2, backwards=False)
 
     #add all items to the grid layout in mainFrame
     # count = 0
