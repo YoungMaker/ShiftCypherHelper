@@ -1,6 +1,5 @@
 import string
 from tkinter import *
-from tkinter import ttk
 
 cypherText = "IUUBL ESBCJ GMANT ODRZC VUITT ALESA BJHGF RNBNT OMBUG HBTTH AUNBN"
 
@@ -15,50 +14,74 @@ def shiftBy(shift, inputStr):
     shiftText = ""
     for char in inputStr:
         if char in strs:
-            shiftText += " " + strs[(strs.index(char) + shift) % 26]
+            shiftText += "" + strs[(strs.index(char) + shift) % 26]
         else:
             shiftText += "" +  char
     return shiftText
 
-def createLabels(parent, shift, inputStr, backwards=False, font='Helvetica 22 bold'):
+#Todo: invert current color
+def highlight(event):
+    event.widget.configure(fg="red")
+
+
+def createLabels(parent, shift, inputStr, rowStart, backwards=False, font='Helvetica 22 bold'):
     labelList = []
     if not backwards:
         for x in range(shift):
             labelList.append(
-                ttk.Label(parent, text=shiftBy(x+1, inputStr),
-                      font=font))
+                createRow(parent, shiftBy(x + 1, inputStr), x+rowStart)
+            )
     else:
         for x in range(shift, 0, 1):
             print x
             labelList.append(
-                ttk.Label(mainFrame, text=shiftBy(x, inputStr),
-                          font=font))
+                createRow(parent, shiftBy(x, inputStr), (-1*x)+rowStart)
+            )
 
     return labelList
+
+def createRow(parent, text, rowNum, font='Helvetica 22 bold'):
+    labelList = []
+    col =0
+    for char in text:
+        if char in strs:
+            cLabel = Label(parent, text=char,
+                       font=font)
+            cLabel.bind("<Button-1>", highlight)
+            cLabel.grid(row=rowNum, column=col)
+            labelList.append(cLabel)
+
+        else:
+            cLabel = Label(parent, text=char,
+                           font=font).grid(row=rowNum, column=col)
+            labelList.append(cLabel)
+
+        col+=1
+
+    return labelList
+
+
 
 
 if __name__ == '__main__':
     root = Tk()
     root.title("Shift Cipher Helper")
-    mainFrame = ttk.Frame(root)
+    mainFrame = Frame(root)
 
-    mainFrame.grid(column=0, row=(maxShift*2)+1, sticky=(N, W, E, S))
+    mainFrame.grid(column=len(cypherText)+1, row=(maxShift*2)+1, sticky=(N, W, E, S))
 
-    createLabels(mainFrame, -1 * maxShift, cypherText, backwards=True)
 
-    cText = ttk.Label(mainFrame, text=shiftBy(0, cypherText),
+    createLabels(mainFrame, -1 * maxShift, cypherText, 0, backwards=True)
+
+    cText = Label(mainFrame, text=shiftBy(0, cypherText),
                       font='Helvetica 22 bold')
 
+    createLabels(mainFrame, maxShift, cypherText, 0, backwards=False)
 
-    createLabels(mainFrame, maxShift, cypherText)
-
-
-
-
-
-    count = 0
-    for child in mainFrame.winfo_children():
-        child.grid(column=0, row=count)
-        count += 1
+    #add all items to the grid layout in mainFrame
+    # count = 0
+    # for child in mainFrame.winfo_children():
+    #     child.grid(column=0, row=count)
+    #     count += 1
 
     root.mainloop()
