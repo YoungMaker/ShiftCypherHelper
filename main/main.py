@@ -3,7 +3,7 @@ from tkinter import *
 
 cypherText = "IUUBL ESBCJ GMANT ODRZC VUITT ALESA BJHGF RNBNT OMBUG HBTTH AUNBN"
 
-strs = string.ascii_uppercase
+strs = string.ascii_uppercase #reference string of ascii upercase letters
 
 maxShift = 1
 
@@ -21,7 +21,11 @@ def shiftBy(shift, inputStr):
 
 #Todo: invert current color
 def highlight(event):
-    event.widget.configure(fg="red")
+    if event.widget.cget("fg") == "red":
+        event.widget.config(fg="black")
+    else:
+        event.widget.config(fg="red")
+
 
 
 def createLabels(parent, shift, inputStr, rowStart, backwards=False, font='Helvetica 22 bold'):
@@ -33,7 +37,6 @@ def createLabels(parent, shift, inputStr, rowStart, backwards=False, font='Helve
             )
     else:
         for x in range(shift, 0, 1):
-            print x
             labelList.append(
                 createRow(parent, shiftBy(x, inputStr), (-1*x)+rowStart)
             )
