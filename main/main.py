@@ -1,6 +1,6 @@
 import string
 from tkinter import *
-from tkinter.ttk import Separator, Style
+#from tkinter.ttk import Separator, Style
 import os
 
 cipherText = ""
@@ -127,8 +127,8 @@ if __name__ == '__main__':
 
     #createLabels(mainFrame, maxShift, cipherText, maxShift + 2, backwards=False)
 
-    sep = Separator(root, orient="horizontal")
-    sep.grid(column= 1, row =(maxShift*2)+1, sticky="ws")
+    #sep = Separator(root, orient="horizontal")
+    #sep.grid(column= 1, row =(maxShift*2)+1, sticky="ws")
 
     outputVarList = createRow(mainFrame, outputStr, (maxShift*2)+2)
 
