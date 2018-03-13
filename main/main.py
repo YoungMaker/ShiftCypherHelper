@@ -1,12 +1,13 @@
 import string
 from tkinter import *
 from tkinter.ttk import Separator, Style
+import os
 
-cypherText = "IUUBL ESBCJ GMANT ODRZC VUITT ALESA BJHGF RNBNT OMBUG HBTTH AUNBN"
+cipherText = ""
 
 strs = string.ascii_uppercase #reference string of ascii upercase letters
 
-maxShift = 2
+maxShift = 1
 
 outputVarList = []
 
@@ -80,12 +81,36 @@ def createRow(parent, text, rowNum, font='Helvetica 22 bold'):
     return varList
 
 
+def loadFromFile(fname):
+    global cipherText
+    global maxShift
+
+    if os.path.isfile(fname):
+        f = open(fname, "r")
+        #reads first line of file as ciphertext
+        cipherText = f.readline().rstrip()
+        cipherText = cipherText.upper()
+
+        numShifts = f.readline()
+        try:
+            int(numShifts)
+        except ValueError:
+            print "number of shifts not present. Exiting"
+            exit(-1)
+        maxShift = int(numShifts)
+        f.close()
+    else:
+        print "no ciphertext file found"
+        exit(-1)
+
 
 
 if __name__ == '__main__':
+    loadFromFile("cipherText.txt")
+
     #just used to setup the row.
     outputStr = ""
-    for char in cypherText:
+    for char in cipherText:
         outputStr += " "
 
     root = Tk()
@@ -97,11 +122,11 @@ if __name__ == '__main__':
 
 
 
-    createLabels(mainFrame, -1 * maxShift, cypherText, 0, backwards=True)
+    createLabels(mainFrame, -1 * maxShift, cipherText, 0, backwards=True)
 
-    createRow(mainFrame, cypherText,  maxShift+1)
+    createRow(mainFrame, cipherText, maxShift + 1)
 
-    createLabels(mainFrame, maxShift, cypherText, maxShift+2, backwards=False)
+    createLabels(mainFrame, maxShift, cipherText, maxShift + 2, backwards=False)
 
     sep = Separator(root, orient="horizontal")
     sep.grid(column= 1, row =(maxShift*2)+1, sticky="ws")
