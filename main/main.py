@@ -121,12 +121,11 @@ if __name__ == '__main__':
     mainFrame.grid(column=0, row=0, sticky=(N, W, E, S))
 
 
-
     createLabels(mainFrame, -1 * maxShift, cipherText, 0, backwards=True)
 
     createRow(mainFrame, cipherText, maxShift + 1)
 
-    createLabels(mainFrame, maxShift, cipherText, maxShift + 2, backwards=False)
+    #createLabels(mainFrame, maxShift, cipherText, maxShift + 2, backwards=False)
 
     sep = Separator(root, orient="horizontal")
     sep.grid(column= 1, row =(maxShift*2)+1, sticky="ws")
